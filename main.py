@@ -1,73 +1,78 @@
-import story_line
 import random
 
 nesus = {
-    'health' : 200,
-    'attack power' : 10,
+    'health' : 1,
+    'attack power' : [5,10,15],
     'list_of_attacks' : ['punch', 'charge', 'kick']
-}
-cyclops = {
-    'health' : 300,
-    'attack power' : 10,
-    'list_of_attacks' : ['stomp', 'club swing']
-}
-hydra = {
-    'health' : 400,
-    'attack power' : 10,
-    'list_of_attacks' : ['bite']
 }
 
 hercules = {
-        'health' : 1000,
-        'attack power' : 15,
+        'health' : 100,
+        'attack power' : [5,10,15],
         'list_of_attacks' : ['punch', 'headbutt', 'sword slash']
     }
 
-def user_attack_menu():
+# Attacking
+def user_attack_menu(user_attacks):
     #Purpose: allows user to choose which attack
-    list_of_attacks = hercules.get("list_of_attacks")
-    print(list_of_attacks)
-    users_attack = int(input("Which attack would you like to perform? "))
-    if users_attack == 1:
-        print(list_of_attacks[0])
-    elif users_attack == 2:
-        print(list_of_attacks[1])
-    elif users_attack == 3:
-        print(list_of_attacks[2])
+    count = 1
+    print("Your attacks:")
+    for items in user_attacks:
+        print(f'\t{count} for {items}')
+        count += 1
+    
+    users_choice = int(input("Which attack would you like to perform? "))
+    if users_choice == 1:
+        return user_attacks[0]
+    elif users_choice == 2:
+        return user_attacks[1]
+    elif users_choice == 3:
+        return user_attacks[2]
 
+# Chooses random attack for foe
+def random_foe_attack(enemy_attacks):
+    return random.choice(enemy_attacks)
 
-def foes_random_attack(name_of_foe):
-    #Purpose: randomly picks which attack to use against user
-    list_of_attacks = name_of_foe.get("list_of_attacks")
-    foe_random_attack = random.choice(list_of_attacks)
-    return foe_random_attack
+# Chooses random strength for attack
+def random_attack_strength(attack_strength):
+    return random.choice(attack_strength)
 
-def users_health():
-    #Purpose: keep track of users's health. adds or subtracts.
-    users_health = hercules.get("health")
-    if users_health == 0:
-        return
-    pass
+# Health
+# Attacking string: attack with for damage
+def user_attacking_string(which_attack_from_user, which_foe, damage):
+    print(f'You {which_attack_from_user}ed {which_foe} for {damage} damage!')
 
-def foes_health():
-    #Purpose: keep track of foe's health. adds or subtracts
-    pass
+def foe_attacking_string(which_foe, which_attack_from_foe, damage):
+    print(f'{which_foe} {which_attack_from_foe}ed you for {damage} damage!')
 
-def attack():
-    #Purpose: user attack to lower foes health. foes attack to lower users health. Terminate attack once user or foe reaches zero health
-    pass
+# Keeping track of users health
+def keeping_track_of_users_health(users_health, foes_damage):
+    hercules['health'] = users_health - foes_damage
+    if hercules['health'] <= 0:
+        print("You died")
+    else:
+        print("Your health: ", hercules['health'])
 
-def run_game():
-    #Purpose: call other functions in a logical order that will determine game flow
-    story_line.start_of_game_story()
-    story_line.first_foe_story()
-    story_line.second_foe_story()
-    story_line.third_foe_story()
-    story_line.end_of_game_story()
+# Keeping track of foe's health  
+def keeping_track_of_foes_health(foes_health, users_damage):
+    nesus['health'] = foes_health - users_damage
+    if nesus['health'] <= 0:
+        print("Nesus died")
+    else:
+        print("Nesus' Health: ", nesus['health'])
 
-#run_game()
-#user_attack_menu()
+# Purpose: Runs program
+def main():
+    users_attack = user_attack_menu(hercules['list_of_attacks'])
+    foes_attack = random_foe_attack(nesus['list_of_attacks'])
+    users_random_attack_strength = random_attack_strength(hercules['attack power'])
+    foes_random_attack_strength = random_attack_strength(nesus['attack power'])
 
-print(foes_random_attack(nesus))
-print(foes_random_attack(nesus))
-print(foes_random_attack(nesus))
+    user_attacking_string(users_attack, "Nesus", users_random_attack_strength)
+    keeping_track_of_foes_health(nesus['health'], users_random_attack_strength)
+
+    if nesus['health'] > 0:
+        foe_attacking_string("Nesus", foes_attack, foes_random_attack_strength)
+        keeping_track_of_users_health(hercules['health'], foes_random_attack_strength)
+
+main()
