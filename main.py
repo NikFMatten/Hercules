@@ -97,12 +97,13 @@ main()
 
 
 # Current Known issues:
-# 1) perform_attacks() function has a lot: collects data, performs attack, updates health after attack
-# 2) foe is not generic. Currently only works with one foe - Nesus
+# - perform_attacks() function has a lot: collects data, performs attack, updates health after attack
+# - foe is not generic. Currently only works with one foe - Nesus
+# - Global variables for characters (Hercules and Nesus)
 
 # Future  Goals:
-# 1) Add more villians
-# 2) Make 'Nesus' calls generic for the addition of villians
-# 3) Remove characters as a global variable
-# 4) Implement a 'missed attack' -- attack missed causing 0 dmg
-# 5) Eventual storyline
+# + Add more villians
+# + Make 'Nesus' calls generic for the addition of villians
+# + Remove characters as a global variable
+# + Implement a 'missed attack' -- attack missed causing 0 dmg
+# + Eventual storyline
