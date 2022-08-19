@@ -12,7 +12,7 @@ hercules = {
         'list_of_attacks' : ['punched', 'headbutt', 'sword slashed']
     }
 
-# Attacking
+# Builds menu (of users attacks) to choose from
 def user_attack_menu(user_attacks):
     #Purpose: allows user to choose which attack
     count = 1
@@ -21,18 +21,25 @@ def user_attack_menu(user_attacks):
         print(f'\t{count} for {items}')
         count += 1
     
-    users_choice = int(input("\nWhich attack would you like to perform? "))
-    print('\n')
-    
-    if users_choice == 1:
-        return user_attacks[0]
-    elif users_choice == 2:
-        return user_attacks[1]
-    elif users_choice == 3:
-        return user_attacks[2]
-    else: 
-        print("Invalid selection, something happens, need to fix") 
-        # If invalid selection, still continues to perform_attacks() but with "None" as attack. Dmg still delivered
+# User selects which attack to perform    
+def user_selecting_attack(user_attacks):
+    user_attack_menu(user_attacks)    
+    invalid_selection = True
+    while invalid_selection:
+        users_choice = int(input("\nWhich attack would you like to perform? "))
+        if users_choice == 1:
+            selected_attack = user_attacks[0]
+            invalid_selection = False
+        elif users_choice == 2:
+            selected_attack = user_attacks[1]
+            invalid_selection = False
+        elif users_choice == 3:
+            selected_attack = user_attacks[2]
+            invalid_selection = False
+        else: 
+            print("Invalid selection, please enter 1, 2 or 3") 
+            invalid_selection = True
+    return selected_attack
 
 # Chooses random attack for foe
 def random_foe_attack(enemy_attacks):
@@ -42,12 +49,15 @@ def random_foe_attack(enemy_attacks):
 def random_attack_strength(attack_strength):
     return random.choice(attack_strength)
 
+# Performs user and foes attack on each other. Updates health after attack
 def perform_attacks():
-    users_attack = user_attack_menu(hercules['list_of_attacks'])
+    # Collects necessary data to perform attack
+    users_attack = user_selecting_attack(hercules['list_of_attacks'])
     foes_attack = random_foe_attack(nesus['list_of_attacks'])
     users_random_attack_strength = random_attack_strength(hercules['attack power'])
     foes_random_attack_strength = random_attack_strength(nesus['attack power'])
 
+    # Ensures user and foe hasn't died to perform attack; attacks and updates health after receving damage
     if hercules['health'] <= 0:
         return
     else:
@@ -87,7 +97,8 @@ main()
 
 
 # Current Known issues:
-# If invalid selection for user attack, still continues to perform_attacks() but with "None" as attack. Dmg still delivered
+# 1) perform_attacks() function has a lot: collects data, performs attack, updates health after attack
+# 2) foe is not generic. Currently only works with one foe - Nesus
 
 # Future  Goals:
 # 1) Add more villians

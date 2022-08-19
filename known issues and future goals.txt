@@ -1,12 +1,13 @@
-______________
+ ____________
 |Known Issues|
---------------
-# 1) If invalid selection for user attack, still continues to perform_attacks() but with "None" as attack. Dmg still delivered
+ ‾‾‾‾‾‾‾‾‾‾‾‾
+# 1) perform_attacks() function has a lot: collects data, performs attack, updates health after attack
+# 2) foe is not generic. Currently only works with one foe - Nesus
 
 
-____________
-Future Goals|
--------------
+ ____________
+|Future Goals|
+ ‾‾‾‾‾‾‾‾‾‾‾‾
 # 1) Add more villians
 # 2) Make 'Nesus' calls generic for the addition of villians
 # 3) Remove characters as a global variable
