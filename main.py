@@ -1,15 +1,15 @@
 import random
 
 nesus = {
-    'health' : 1,
+    'health' : 100,
     'attack power' : [5,10,15],
-    'list_of_attacks' : ['punch', 'charge', 'kick']
+    'list_of_attacks' : ['punched', 'charged', 'kicked']
 }
 
 hercules = {
         'health' : 100,
         'attack power' : [5,10,15],
-        'list_of_attacks' : ['punch', 'headbutt', 'sword slash']
+        'list_of_attacks' : ['punched', 'headbutt', 'sword slashed']
     }
 
 # Attacking
@@ -21,13 +21,18 @@ def user_attack_menu(user_attacks):
         print(f'\t{count} for {items}')
         count += 1
     
-    users_choice = int(input("Which attack would you like to perform? "))
+    users_choice = int(input("\nWhich attack would you like to perform? "))
+    print('\n')
+    
     if users_choice == 1:
         return user_attacks[0]
     elif users_choice == 2:
         return user_attacks[1]
     elif users_choice == 3:
         return user_attacks[2]
+    else: 
+        print("Invalid selection, something happens, need to fix") 
+        # If invalid selection, still continues to perform_attacks() but with "None" as attack. Dmg still delivered
 
 # Chooses random attack for foe
 def random_foe_attack(enemy_attacks):
@@ -37,42 +42,44 @@ def random_foe_attack(enemy_attacks):
 def random_attack_strength(attack_strength):
     return random.choice(attack_strength)
 
-# Health
-# Attacking string: attack with for damage
-def user_attacking_string(which_attack_from_user, which_foe, damage):
-    print(f'You {which_attack_from_user}ed {which_foe} for {damage} damage!')
-
-def foe_attacking_string(which_foe, which_attack_from_foe, damage):
-    print(f'{which_foe} {which_attack_from_foe}ed you for {damage} damage!')
-
-# Keeping track of users health
-def keeping_track_of_users_health(users_health, foes_damage):
-    hercules['health'] = users_health - foes_damage
-    if hercules['health'] <= 0:
-        print("You died")
-    else:
-        print("Your health: ", hercules['health'])
-
-# Keeping track of foe's health  
-def keeping_track_of_foes_health(foes_health, users_damage):
-    nesus['health'] = foes_health - users_damage
-    if nesus['health'] <= 0:
-        print("Nesus died")
-    else:
-        print("Nesus' Health: ", nesus['health'])
-
-# Purpose: Runs program
-def main():
+def perform_attacks():
     users_attack = user_attack_menu(hercules['list_of_attacks'])
     foes_attack = random_foe_attack(nesus['list_of_attacks'])
     users_random_attack_strength = random_attack_strength(hercules['attack power'])
     foes_random_attack_strength = random_attack_strength(nesus['attack power'])
 
-    user_attacking_string(users_attack, "Nesus", users_random_attack_strength)
-    keeping_track_of_foes_health(nesus['health'], users_random_attack_strength)
+    if hercules['health'] <= 0:
+        return
+    else:
+        attacking_string("You", "Nesus", users_attack, users_random_attack_strength)
+        keeping_track_of_health("nesus", users_random_attack_strength)
 
-    if nesus['health'] > 0:
-        foe_attacking_string("Nesus", foes_attack, foes_random_attack_strength)
-        keeping_track_of_users_health(hercules['health'], foes_random_attack_strength)
+    if nesus['health'] <= 0:
+        return
+    else:
+        attacking_string("Nesus", "you", foes_attack, foes_random_attack_strength)   
+        keeping_track_of_health("hercules", foes_random_attack_strength)
+
+# Attacking string: attack with (x) for damage (x)
+def attacking_string(attacker, receiver, which_attack, damage):
+    print(f'{attacker} {which_attack} {receiver} for {damage} damage!')
+
+# Keeping track of health
+def keeping_track_of_health(damage_receiver, damage):
+    if damage_receiver != "hercules":
+        nesus['health'] -= damage
+        if nesus['health'] <= 0:
+            print("Nesus died")
+    else:
+        hercules['health'] -= damage
+        if hercules['health'] <= 0:
+            print("You died.")
+
+# Runs the program (while health for either is above 0)
+def main():
+    while hercules['health'] > 0 and nesus['health'] > 0:
+        print(f'\nHercules health: {hercules["health"]} \t Nesus Health: {nesus["health"]}\n')
+        perform_attacks()
+
 
 main()

@@ -1,0 +1,16 @@
+______________
+|Known Issues|
+--------------
+1) If user inputs invalid selection, reselect a valid choice. User selects new choice. Attack phase occurs. 
+	User attacks with "None" for (x) dmg. (dmg still delivered)
+
+
+____________
+Future Goals|
+-------------
+1) Add more villians
+	- Current nesus variable to be made generic to allow current villian
+
+2) Attack missed (randomly select if attack missed, dealing 0 dmg
+
+3) Last item to add - Store Line
