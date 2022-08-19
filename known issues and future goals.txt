@@ -1,16 +1,14 @@
 ______________
 |Known Issues|
 --------------
-1) If user inputs invalid selection, reselect a valid choice. User selects new choice. Attack phase occurs. 
-	User attacks with "None" for (x) dmg. (dmg still delivered)
+# 1) If invalid selection for user attack, still continues to perform_attacks() but with "None" as attack. Dmg still delivered
 
 
 ____________
 Future Goals|
 -------------
-1) Add more villians
-	- Current nesus variable to be made generic to allow current villian
-
-2) Attack missed (randomly select if attack missed, dealing 0 dmg
-
-3) Last item to add - Store Line
+# 1) Add more villians
+# 2) Make 'Nesus' calls generic for the addition of villians
+# 3) Remove characters as a global variable
+# 4) Implement a 'missed attack' -- attack missed causing 0 dmg
+# 5) Eventual storyline

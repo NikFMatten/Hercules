@@ -83,3 +83,15 @@ def main():
 
 
 main()
+
+
+
+# Current Known issues:
+# If invalid selection for user attack, still continues to perform_attacks() but with "None" as attack. Dmg still delivered
+
+# Future  Goals:
+# 1) Add more villians
+# 2) Make 'Nesus' calls generic for the addition of villians
+# 3) Remove characters as a global variable
+# 4) Implement a 'missed attack' -- attack missed causing 0 dmg
+# 5) Eventual storyline
